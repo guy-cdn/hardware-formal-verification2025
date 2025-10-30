@@ -7,3 +7,5 @@ To clone the repo, run the following from the terminal:
 ```
 git clone https://github.com/guy-cdn/hardware-formal-verification2025.git
 ```
+
+Test.
