@@ -109,6 +109,5 @@ always @(*) begin
     endcase
 end
 
-// For question #1, implement the concurret assertions in the space below:
 
 endmodule
