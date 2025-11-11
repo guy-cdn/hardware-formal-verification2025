@@ -9,11 +9,7 @@ module traffic_light (
 );
 
 // Define the states for car and pedestrian traffic light
-typedef enum reg [1:0] {
-    GREEN  = 2'b00,
-    YELLOW = 2'b01,
-    RED    = 2'b10
-} state_t; 
+import state_pkg::*;
 
 state_t car_state, next_car_state;
 state_t pedestrian_state, next_pedestrian_state;
@@ -25,7 +21,7 @@ parameter YELLOW_TIME = 1;   // Car yellow light time
 parameter RED_TIME = 2;      // Time before pedestrian light turns green
 
 reg [24:0] car_timer;        // Timer for state transitions
-reg pedestrian_request;     // Register to store pedestrian button press
+reg pedestrian_request;      // Register to store pedestrian button press
 
 // Sequential logic, updating next states
 always @(posedge clk or posedge rst) begin
@@ -109,7 +105,4 @@ always @(*) begin
     endcase
 end
 
-// For question #1, implement the concurret assertions in the space below:
-
 endmodule
-
