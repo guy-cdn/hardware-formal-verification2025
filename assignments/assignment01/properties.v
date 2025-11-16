@@ -14,8 +14,10 @@ input reg pedestrian_light;
 
 import state_pkg::*;
 
-// *************** EDIT ONLY BELOW THIS LINE *****************
-
+// *************** INSTRUCTION FOR PART A:   ***************
+// *************** EDIT ONLY BELOW THIS LINE ***************
+// *********************************************************
+   
 // NOTE: 
 // - Don't change the property names (P1, P2, ...) below.
 // - Don't change the labels (A1, A2, ...) below.
