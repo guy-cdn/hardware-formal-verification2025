@@ -36,8 +36,8 @@ module register_prop(clk, rst,
       end
   end
 
-  consistent_x7_rs1: assert property (@(posedge clk) written && rvfi_rs1_addr == 5'd7 |-> data == rvfi_rs1_data);
-  consistent_x7_rs2: assert property (@(posedge clk) written && rvfi_rs2_addr == 5'd7 |-> data == rvfi_rs2_data);
+  consistent_x7_rs1: assert property (@(posedge clk) rvfi_valid && written && rvfi_rs1_addr == 5'd7 |-> data == rvfi_rs1_rdata);
+  consistent_x7_rs2: assert property (@(posedge clk) rvfi_valid && written && rvfi_rs2_addr == 5'd7 |-> data == rvfi_rs2_rdata);
 
 endmodule
 
