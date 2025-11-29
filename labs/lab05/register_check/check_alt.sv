@@ -20,13 +20,11 @@ module register_prop(clk, rst,
 
   reg[31:0] data; // Last data written to x7
   reg written;    // Indicator whether data was written to x7
-  reg consistent; // Indicator for consistency of write/read to x7
 
   always @(posedge clk) begin
       if (!rst) begin 
           // Initial values
           written <= 1'b0;
-          consistent <= 1'b1;
       end else if (rvfi_valid) begin
           if (rvfi_rd_addr == 5'd7) begin
               // Data is written to x7, store written value in data
