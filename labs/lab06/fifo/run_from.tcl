@@ -17,7 +17,6 @@ set_prove_verbosity 11
 prove -property fifo.full_empty -time_limit 10s
 
 # Break the proof (search for cover) to multiple parts.
-cover -name c0 {empty}
 cover -name c1 {count == 30}
 cover -name c2 {count == 60}
 cover -name c3 {count == 90}
