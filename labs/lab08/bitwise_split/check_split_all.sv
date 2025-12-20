@@ -18,9 +18,9 @@ module register_prop(clk, rst,
   input reg[4:0]  rvfi_rs2_addr;
   input reg[31:0] rvfi_rs2_rdata;
 
-  reg[31:0] data; // Last data written to x7
-  reg written;    // Indicator whether data was written to x7
-  reg[31:0] inconsistent; // Indicator for inconsistency of write/read to x7
+  reg[31:0] data; // Last data written to x_index
+  reg written;    // Indicator whether data was written to x_index
+  reg[31:0] inconsistent; // Indicator for consistency of write/read to x_index
   reg[4:0] index; // Nondeterministic choice for the register index
 
   always @(posedge clk) begin
@@ -34,24 +34,27 @@ module register_prop(clk, rst,
               data <= rvfi_rd_wdata;
               written <= 1'b1;
           end
-          if (written && rvfi_rs1_addr == index) begin
+          if (written && rvfi_rs1_addr == index && rvfi_rs2_addr != index) begin
               // Data is read from x_index, check consistency with stored data
               inconsistent <= data ^ rvfi_rs1_rdata;
-          end else if (written && rvfi_rs2_addr == index) begin
+          end else if (written && rvfi_rs1_addr != index && rvfi_rs2_addr == index) begin
               // Data is read from x_index, check consistency with stored data
               inconsistent <= data ^ rvfi_rs2_rdata;
+          end else if (written && rvfi_rs1_addr == index && rvfi_rs2_addr == index) begin
+              // Data is read from x_index, check consistency with stored data
+              inconsistent <= (data ^ rvfi_rs1_rdata) | (data ^ rvfi_rs2_rdata);
           end
       end
   end
 
-stable_index: assume property (@(posedge clk) 1 ##1 $stable(index));
-positive_index: assume property (@(posedge clk) index != 5'd0);
+  stable_index: assume property (@(posedge clk) 1 ##1 $stable(index));
+  positive_index: assume property (@(posedge clk) index != 5'd0);
 
-generate
-for (genvar i = 0; i < 32; i++) begin
-  consistent_x7: assert property (@(posedge clk) inconsistent[i] == 0);
-end
-endgenerate
+  generate
+  for (genvar i = 0; i < 32; i++) begin
+    consistent_x7: assert property (@(posedge clk) inconsistent[i] == 0);
+  end
+  endgenerate
 
 endmodule
 

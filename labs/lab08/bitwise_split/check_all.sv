@@ -34,12 +34,15 @@ module register_prop(clk, rst,
               data <= rvfi_rd_wdata;
               written <= 1'b1;
           end
-          if (written && rvfi_rs1_addr == index) begin
+          if (written && rvfi_rs1_addr == index && rvfi_rs2_addr != index) begin
               // Data is read from x_index, check consistency with stored data
               inconsistent <= data ^ rvfi_rs1_rdata;
-          end else if (written && rvfi_rs2_addr == index) begin
+          end else if (written && rvfi_rs1_addr != index && rvfi_rs2_addr == index) begin
               // Data is read from x_index, check consistency with stored data
               inconsistent <= data ^ rvfi_rs2_rdata;
+          end else if (written && rvfi_rs1_addr == index && rvfi_rs2_addr == index) begin
+              // Data is read from x_index, check consistency with stored data
+              inconsistent <= (data ^ rvfi_rs1_rdata) | (data ^ rvfi_rs2_rdata);
           end
       end
   end
