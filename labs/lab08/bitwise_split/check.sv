@@ -33,17 +33,20 @@ module register_prop(clk, rst,
               data <= rvfi_rd_wdata;
               written <= 1'b1;
           end
-          if (written && rvfi_rs1_addr == 5'd7) begin
+          if (written && rvfi_rs1_addr == 5'd7 && rvfi_rs2_addr != 5'd7) begin
               // Data is read from x7, check consistency with stored data
               inconsistent <= data ^ rvfi_rs1_rdata;
-          end else if (written && rvfi_rs2_addr == 5'd7) begin
+          end else if (written && rvfi_rs1_addr != 5'd7 && rvfi_rs2_addr == 5'd7) begin
               // Data is read from x7, check consistency with stored data
               inconsistent <= data ^ rvfi_rs2_rdata;
+          end else if (written && rvfi_rs1_addr == 5'd7 && rvfi_rs2_addr == 5'd7) begin
+              // Data is read from x7, check consistency with stored data
+              inconsistent <= (data ^ rvfi_rs1_rdata) | (data ^ rvfi_rs2_rdata);
           end
       end
   end
 
-consistent_x7: assert property (@(posedge clk) inconsistent == 32'd0);
+  consistent_x7: assert property (@(posedge clk) inconsistent == 32'd0);
 
 endmodule
 
