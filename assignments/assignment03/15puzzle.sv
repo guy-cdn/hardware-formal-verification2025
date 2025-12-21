@@ -78,6 +78,8 @@ c: cover property (@(posedge clk) solution);
 // 2. Use auxiliary code if needed.
 // 3. Do not change the name of the property (keep it "P").
 // 4. Do not change the label of the assert (keep it "A").
+// 5. You are allowed to make changes to the module above so long as these
+//    changes do not alter the transition rules of the puzzle.
 
 // IMPLEMENT THE AUXILIARY CODE HERE IF NEEDED
 
