@@ -70,7 +70,21 @@ wire solution = cells[0][0] == 1 &
                 cells[3][2] == 15 &
                 cells[3][3] == 0;
 
-// A cover property for checking that a solution can be reached
+// An example cover property for checking that a solution can be reached
 c: cover property (@(posedge clk) solution);
+
+// Instructions:
+// 1. Implement "property P;" below.
+// 2. Use auxiliary code if needed.
+// 3. Do not change the name of the property (keep it "P").
+// 4. Do not change the label of the assert (keep it "A").
+
+// IMPLEMENT THE AUXILIARY CODE HERE IF NEEDED
+
+property P;
+    @(posedge clk) (1); // IMPLEMENT THE PROPERTY HERE
+endproperty
+
+A: cover property (P);
 
 endmodule
