@@ -1,4 +1,4 @@
 analyze -sv09 fifo.sv
-elaborate
+elaborate -bbox_a 4096
 clock clk
 reset ~rst
