@@ -129,7 +129,7 @@ module wrap
    reg [12:0] free_id;
    asm_stable_id: assume property (@(posedge clk) $stable(free_id));
    valid_id: assert property (@(posedge clk) msg.is_header && msg._m.header.id == free_id && msg._m.header.length > 'b0 |-> s_eventually valid && id == free_id);
-   asm: assume property (@(posedge clk) 1 ##3 data_in == $past(data_in)*$past(data_in, 3));
+   asm: assume property (@(posedge clk) 1 ##5 data_in == $past(data_in)*$past(data_in, 3)*$past(data_in, 5));
    id_cnt_skip: assert property (@(posedge clk) calculator_i.id == 13'h1f83|-> ##[456:497] valid);
 
 endmodule // wrap
