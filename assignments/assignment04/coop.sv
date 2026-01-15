@@ -2,12 +2,12 @@ typedef enum reg [1:0] {SET, ADD, SUB, MUL} op_t;
 typedef struct packed {
    reg [12:0] id;
    reg [5:0] length;
-   reg [14:0] nothing;
+   reg [46:0] nothing;
 } header_t;
 
 typedef struct packed {
    op_t op;
-   reg [31:0] data;
+   reg [63:0] data;
 } arg_t;
 
 typedef struct {
@@ -22,7 +22,7 @@ module generator
   (
    input        clk,
    input        rst,
-   input [31:0] data_in,
+   input [63:0] data_in,
    input [5:0]  len_in,
    input        op_t op,
    output       message_t msg
@@ -64,7 +64,7 @@ module calculator
    input             clk,
    input             rst,
    input             message_t msg,
-   output reg [31:0] res,
+   output reg [63:0] res,
    output reg [12:0] id,
    output reg        valid);
 
@@ -114,11 +114,11 @@ module wrap
   (
    input             clk,
    input             rst,
-   input [31:0]      data_in,
+   input [63:0]      data_in,
    input [5:0]       len_in,
    input             op_t op,
 
-   output reg [31:0] res,
+   output reg [63:0] res,
    output reg [12:0] id,
    output            valid);
 
